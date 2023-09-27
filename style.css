@@ -1,15 +1,13 @@
-.child {
+.gridContainer {
+    display: flex;
+    flex-wrap:wrap;
+}
+.clickTarget {
     width: 100px;
     height: 50px;
+    background: grey;
     display: flex;
-    justify-content: center;
     align-items: center;
-    background: #d50c31;
-    margin: 10px 5px 10px 5px;
-    color: #fff;
-}
-body {
-    height: 600px;
-    display: flex;
-    flex-wrap: wrap;
+    justify-content: center;
+    margin: 0 5px 5px 0;
 }

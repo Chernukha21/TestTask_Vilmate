@@ -1,33 +1,33 @@
-(function createElements() {
-    const body = document.body;
-    const fragment = new DocumentFragment();
-    let selectedItem = null;
-    let previousPosition = null;
+let arr = []
+for(let i = 1; i <= 100; i++) {
+    arr.push(i)
+}
 
-    for (let i = 0; i < 100; i++) {
-        const div = document.createElement("div");
-        div.classList.add('child');
-        div.textContent = `div${i + 1}`;
-        fragment.append(div);
+const body = document.querySelector('body');
+const gridConteiner = document.querySelector('.gridContainer');
+
+function renderGrid(){
+    arr.forEach(item => {
+        const div = `<div class="clickTarget" data-number="${item}">${item}</div>`
+        gridConteiner.insertAdjacentHTML('beforeend', div);
+    });
+
+}
+
+
+body.addEventListener('click', (e)=> {
+    if(e.target.classList.contains('moved')){
+        const number =  +e.target.textContent.match(/\d+/g).join('');
+        console.log(number)
+        const notMovedDivs = Array.from(document.querySelectorAll('.clickTarget:not(.moved)'), element => element.innerHTML);
+        e.target.classList.remove('moved');
+        const numberOfElementToInsertBefore = notMovedDivs.find((item)=> item > number);
+        document.querySelector(`[data-number="${numberOfElementToInsertBefore}"]`).insertAdjacentElement('beforebegin', e.target)
+    } else {
+        e.target.classList.add('moved');
+        gridConteiner.insertAdjacentElement('afterbegin', e.target)
     }
 
-    body.append(fragment);
-    body.addEventListener('click', (e) => {
-        if (e.target.tagName === 'DIV') {
-            if (selectedItem === e.target) {
-                if (previousPosition !== null) {
-                    body.insertBefore(e.target, body.children[previousPosition]);
-                    previousPosition = null;
-                }
-                selectedItem = null;
-            }else {
-                let arr = [];
-                arr.push(body.children);
-                previousPosition = arr.indexOf(e.target);
-                body.insertBefore(e.target, body.children[0]);
-                selectedItem = e.target;
-            }
-        }
-    })
-})();
+})
 
+renderGrid();
