@@ -18,8 +18,7 @@ function renderGrid(){
 body.addEventListener('click', (e)=> {
     if(e.target.classList.contains('moved')){
         const number =  +e.target.textContent.match(/\d+/g).join('');
-        console.log(number)
-        const notMovedDivs = Array.from(document.querySelectorAll('.clickTarget:not(.moved)'), element => element.innerHTML);
+        const notMovedDivs = Array.from(document.querySelectorAll('.clickTarget:not(.moved)'), element => element.dataset.number);
         e.target.classList.remove('moved');
         const numberOfElementToInsertBefore = notMovedDivs.find((item)=> item > number);
         document.querySelector(`[data-number="${numberOfElementToInsertBefore}"]`).insertAdjacentElement('beforebegin', e.target)
